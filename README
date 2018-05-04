@@ -1,0 +1,49 @@
+Forum plugin for SquirrelMail
+=============================
+
+1. Requirements
+-------------------------------------------------------------------------------
+
+   * PHP version 4.3.2 or above.
+   * PEAR extension with MDB2 package and MDB2 Driver.
+   * A database.
+
+
+2. Installation instructions
+-------------------------------------------------------------------------------
+
+   See INSTALL for installation instructions.
+
+
+3. Upgrade instructions
+-------------------------------------------------------------------------------
+
+   1.0 to 1.1 
+    - Just replace old plugin directory with the new downloaded.
+
+
+4. License
+-------------------------------------------------------------------------------  
+
+   This plugin is released under the GNU General Public. 
+   See http://www.gnu.org/licenses/gpl.txt for details.
+   Copyright 2006 Jacques Mendelsohn.
+
+
+5. About
+-------------------------------------------------------------------------------  
+
+   Do not hesitate to report me bugs or to confirm that a configuration 
+   which has not been tested, works! My native language is not English,
+   then please, forgive me for my spelling mistakes, do not hesitate to 
+   report me them too : jacques.mendelsohn %AT% yahoo %DOT% com
+
+
+6. Change Log
+-------------------------------------------------------------------------------
+
+version 1.1
+- Fixed timezone bug
+
+version 1.0
+- Initial version

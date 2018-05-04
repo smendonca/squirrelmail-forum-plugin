@@ -1,0 +1,117 @@
+Forum plugin for SquirrelMail installation instructions
+=======================================================
+
+1. Requirements
+-------------------------------------------------------------------------------
+
+   See README for requirements.
+
+   
+2. Detailed installation instructions
+-------------------------------------------------------------------------------
+
+ 2.1 Install PEAR
+ ----------------
+
+   Install PEAR.
+
+   See http://pear.php.net/manual/en/ for details.
+
+   Install MDB2 package.
+   Choose and install a MDB2 driver.
+   
+   You must choose MDB2 driver according to your database. This plugin
+   has only been tested with a MySQL driver.
+
+ 2.2 Download and unpack
+ -----------------------
+   
+   Download the archive into the plugins directory, then untaring it.
+   
+   shell>tar xvzf forum-1.x-1.x.x.tar.gz
+
+ 2.3 Configure FORUM
+ -------------------
+
+   Copy 'config.sample.php' to 'config.php'.
+
+   shell>cd forum
+   shell>cp config.sample.php config.php
+
+   Edit and configure 'config.php'.
+
+ 2.4 Create a database
+ ---------------------  
+ 
+   These instructions are for a MySQL server but you can use them with
+   any other DB by changing the commands as needed.
+   
+   You can use the mysql prompt to create the database.
+
+   shell>mysql -u root -p -h localhost
+   mysql>CREATE DATABASE sqmail_forum;
+   mysql>GRANT ALL ON sqmail_forum.* TO user@localhost IDENTIFIED BY 'password';
+
+   Now, you can choose the good database schema, according to the MDB2
+   Driver installation in step 2.1. Select it in step 2.6 then copy it
+   into a file.
+
+   Insert schema from your file.
+
+   shell>mysql -u user -p -h localhost -D sqmail_forum < schema_database.txt
+
+ 2.5 Configure SquirrelMail
+ --------------------------
+
+   Go to your SquirrelMail config directory and run 'conf.pl'. 
+
+   shell>cd ../../../config/
+   shell>./conf.pl
+
+   Choose option "8" and move the plugin from the "Available Plugins"
+   category to the "Installed Plugins" category. Save and exit.
+
+ 2.6 Database schema
+ -------------------
+ 
+  2.6.1 MySQL
+  -----------
+
+   CREATE TABLE `sqmf_forum` (
+      `forum_id` int(11) NOT NULL auto_increment,
+      `forum_name` varchar(50) NOT NULL,
+      `forum_description` varchar(250) NOT NULL,
+      `forum_visible` int(1) NOT NULL default '0',
+      `display_order` int(2) NOT NULL default '1',
+      PRIMARY KEY  (`forum_id`)
+   ) ENGINE=MyISAM;
+   CREATE TABLE `sqmf_post` (
+      `post_id` int(11) NOT NULL auto_increment,
+      `thread_id` int(11) NOT NULL,
+      `post_login` varchar(70) NOT NULL,
+      `post_date` datetime NOT NULL,
+      `post_content` longtext NOT NULL,
+      PRIMARY KEY  (`post_id`),
+      KEY `post_date` (`post_date`)
+   ) ENGINE=MyISAM;
+   CREATE TABLE `sqmf_stat` (
+      `stat_login` varchar(70) NOT NULL,
+      `stat_post` int(11) default '1',
+      `stat_thread` int(11) default '1',
+      PRIMARY KEY  (`stat_login`),
+      UNIQUE KEY `user` (`stat_login`)
+   ) ENGINE=MyISAM;
+   CREATE TABLE `sqmf_thread` (
+      `thread_id` int(11) NOT NULL auto_increment,
+      `forum_id` int(11) NOT NULL,
+      `thread_login` varchar(70) NOT NULL,
+      `thread_date` datetime NOT NULL,
+      `thread_title` varchar(200) NOT NULL,
+      `thread_content` longtext NOT NULL,
+      `nb_view` int(11) NOT NULL default '0',
+      `nb_post` int(11) NOT NULL default '1',
+      `last_post_date` datetime NOT NULL,
+      `last_post_login` varchar(70) NOT NULL,
+      PRIMARY KEY  (`thread_id`),
+      KEY `forum_id` (`forum_id`)
+   ) ENGINE=MyISAM;
